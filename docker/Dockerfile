@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libgomp1 libusb-1.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /tmp/requirements.txt
+COPY docker/requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt \
     && rm /tmp/requirements.txt
 
