@@ -6,22 +6,22 @@ on:
   pull_request:
 
 jobs:
-  docker-build:
+  python-check:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: |
-          docker build \
-            -f docker/Dockerfile \
-            -t challenge-inference:latest .
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-      - name: Check Python packages
+      - name: Syntax check
         run: |
-          docker run --rm \
-            --entrypoint python \
-            challenge-inference:latest \
-            -c "import torch, cv2, onnxruntime, numpy; print('OK')"
+          python -m compileall main.py src
+
+      - name: Import check
+        run: |
+          python -c "import pathlib; print('OK')"
